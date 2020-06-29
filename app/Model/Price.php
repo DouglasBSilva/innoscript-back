@@ -4,21 +4,21 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Price extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'products';
+    protected $table = 'prices';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = [ 'name', 'description', 'image', 'value', 'sec_to_be_ready'];
+    protected $fillable = [ 'productId', 'type', 'price'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -41,8 +41,4 @@ class Product extends Model
      */
     protected $dates = [];
 
-
-    function values(){
-        return $this->hasMany('App\Model\Price','productId', 'id');
-    }
 }

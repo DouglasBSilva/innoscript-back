@@ -9,7 +9,7 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $condominios = Product::all();
+        $condominios = Product::with('values')->get();
 
         return response()->json($condominios);
     }
