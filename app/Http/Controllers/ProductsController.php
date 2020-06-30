@@ -9,31 +9,31 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $condominios = Product::with('values')->get();
+        $products = Product::with('values')->get();
 
-        return response()->json($condominios);
+        return response()->json($products);
     }
 
     public function store(ProductRequest $request)
     {
-        $condominio = Product::create($request->all());
+        $product = Product::create($request->all());
 
-        return response()->json($condominio, 201);
+        return response()->json($product, 201);
     }
 
     public function show($id)
     {
-        $condominio = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
 
-        return response()->json($condominio);
+        return response()->json($product);
     }
 
     public function update(ProductRequest $request, $id)
     {
-        $condominio = Product::findOrFail($id);
-        $condominio->update($request->all());
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
 
-        return response()->json($condominio, 200);
+        return response()->json($product, 200);
     }
 
     public function destroy($id)

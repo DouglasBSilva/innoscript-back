@@ -9,31 +9,34 @@ class CustomersController extends Controller
 {
     public function index()
     {
-        $condominios = Customer::latest()->get();
+        $customers = Customer::latest()->get();
 
-        return response()->json($condominios);
+        return response()->json($customers);
     }
 
-    public function store(CustomerRequest $request)
+    public function store(Request $request)
     {
-        $condominio = Customer::create($request->all());
+        $customer = Customer::where('email', $request->get('email'))->get()->first();
+        if(!$customer) {
+            $customer = Customer::create($request->all());
+        }
 
-        return response()->json($condominio, 201);
+        return response()->json($customer, 201);
     }
 
     public function show($id)
     {
-        $condominio = Customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
 
-        return response()->json($condominio);
+        return response()->json($customer);
     }
 
     public function update(CustomerRequest $request, $id)
     {
-        $condominio = Customer::findOrFail($id);
-        $condominio->update($request->all());
+        $customer = Customer::findOrFail($id);
+        $customer->update($request->all());
 
-        return response()->json($condominio, 200);
+        return response()->json($customer, 200);
     }
 
     public function destroy($id)

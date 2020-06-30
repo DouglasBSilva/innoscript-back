@@ -3,37 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Model\Cart;
+use App\Model\Order;
 use Illuminate\Http\Request;
 
 class CartsController extends Controller
 {
     public function index()
     {
-        $condominios = Cart::latest()->get();
+        $carts = Cart::latest()->get();
 
-        return response()->json($condominios);
+        return response()->json($carts);
     }
 
-    public function store(CartRequest $request)
+    public function store(Request $request)
     {
-        $condominio = Cart::create($request->all());
+        $cart = Cart::create(array('status' => 0, 'customerId' => $request->get('customerId')));
+        Order::insert(array_map(function ($order) use ($cart){
+            return array(
+                'cartId' => $cart->id,
+                'productId' => $order['productId'],
+                'quantity' => $order['quantity']
+            ) ;
+        }, $request->get('cart')));
+        $cart->status = 1;
+        $cart->save();
 
-        return response()->json($condominio, 201);
+        return response()->json($cart, 201);
     }
 
     public function show($id)
     {
-        $condominio = Cart::findOrFail($id);
+        $cart = Cart::findOrFail($id);
 
-        return response()->json($condominio);
+        return response()->json($cart);
     }
 
     public function update(CartRequest $request, $id)
     {
-        $condominio = Cart::findOrFail($id);
-        $condominio->update($request->all());
+        $cart = Cart::findOrFail($id);
+        $cart->update($request->all());
 
-        return response()->json($condominio, 200);
+        return response()->json($cart, 200);
     }
 
     public function destroy($id)
