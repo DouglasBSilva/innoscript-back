@@ -18,7 +18,7 @@ class Customer extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'address'];
+    protected $fillable = ['name', 'surname','email', 'address','postalcode'];
 
     /**
      * The attributes excluded from the model's JSON form.

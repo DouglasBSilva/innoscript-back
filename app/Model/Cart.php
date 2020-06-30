@@ -18,7 +18,7 @@ class Cart extends Model
      *
      * @var array
      */
-    protected $fillable = ['status'];
+    protected $fillable = ['status','customerId'];
 
     /**
      * The attributes excluded from the model's JSON form.
